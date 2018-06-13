@@ -1,4 +1,5 @@
 'use strict';
+//going to delete this when making it express
 
 const url = require('url');
 //the url node module gives us access to utilities that can parse and url resolution

@@ -1,4 +1,6 @@
 'use strict';
+//going to delete this when making it express
+
 
 const parser = require('./parser');
 const router = module.exports = {};

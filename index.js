@@ -6,5 +6,5 @@ require('dotenv').config();
 //what does .config() do
 //it reads your env file, parses its contents, assigns it to process.env and returns and OBJECT with the parsed key containing the loaded
 
-require('.src/app.js').start(process.env.PORT);
+require('./src/app.js').start(process.env.PORT);
 //going to start the server immediately by calling/requiring our server (app.js) and calling the start method on our environment variables set in the .env file which the dotenv dependency

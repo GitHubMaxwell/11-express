@@ -1,11 +1,17 @@
 'use strict';
 
-const router = require('../lib/router');
+// to express-ify this app delete the router.js file and delete this line
+// const router = require('../lib/router');
+
 //why dont we have to put the .js at the end of the file name
 //we need to require in this because the router.js file handle creating the route table and building routes from server calls
 
 const Notes = require('../models/notes');
 //require in Notes because per the route we make we will be createing new instances of the note
+
+const express = require('express');
+const router = express.Router();
+//this does what router.js did
 
 
 let sendJSON = (res,data) => {
@@ -20,7 +26,7 @@ let sendJSON = (res,data) => {
 
 let serverError = (res,err) => {
   let error = {error:err};
-  //   assigning the err value generated to the key error in the object literal assigned to variable 'error'
+  // assigning the err value generated to the key error in the object literal assigned to variable 'error'
   res.statusCode = 500;
   //500 are server errors
   res.statusMessage = 'Server Error';
@@ -59,5 +65,8 @@ router.post('api/v1/notes', (req,res)=>{
     .catch(console.error);
 });
 
-module.exports = {};
+// module.exports = {};
 //why just an empty object
+
+//change this for expressify
+module.exports = router;

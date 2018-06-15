@@ -6,7 +6,7 @@
 
 //going to replace the Nodes http module with express
 //we'll also have to deal with const app = http.serverCreate(router.route)
-const express = require('express');
+import express from 'express';
 const app = express();
 
 // the router file is allowing us to
@@ -14,13 +14,16 @@ const app = express();
 // const router = require('./lib/router.js');
 
 
-const api = require('./api/api.js');
-//the api file does
+import api from './api/api.js';
+//changing the api to import will break the server now because we need to 
 //you can call it and not use it explicitly becauase what else requires it???
 
 app.use(express.json());
 //this line is becauase we dont have our parser.js file anymore parsing the title and content data anymore
 //this is middleware that will parse all the body content 
+
+//need to have the url encoded({extended:true})
+
 //this has to be above the app.use(api)
 
 

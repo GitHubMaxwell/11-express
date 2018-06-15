@@ -1,13 +1,13 @@
 'use strict';
 
-const fs = require('fs');
-const storage = module.exports = {};
+import fs from 'fs';
+const storage = {};
 
 //choosing a location/directory to store the files we create in
 const dataDirectory = `${__dirname}/../../../data`;
 //so you need to make this file in your directory
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //Promisify the fs.readFile method
 //are these funcions not arrow function because they need the contextual 'this' ???
 let readFilePromise = function(filename) {
@@ -21,8 +21,8 @@ let readFilePromise = function(filename) {
     });
   });
 };
-////////////////////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////////////////////////
+// echo '{"title":"title test","content":"content test"}' | http post :3000/api/v1/notes
 storage.getAll = () => {
   return new Promise((resolve,reject)=>{
     fs.readdir(dataDirectory, (err,files)=>{
@@ -75,3 +75,5 @@ storage.save = (data) => {
 
   });
 };
+
+export default storage;

@@ -20,6 +20,9 @@
   "homepage": "https://github.com/GitHubMaxwell/11-express#readme",
   "dependencies": {
     "babel": "^6.23.0",
+    "babel-env": "^2.4.1",
+    "babel-eslint": "^8.2.3",
+    "babel-register": "^6.26.0",
     "dotenv": "^6.0.0",
     "eslint": "^4.19.1",
     "express": "^4.16.3",

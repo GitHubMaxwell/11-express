@@ -1,6 +1,6 @@
 'use strict';
 
-const storage = module.exports = {};
+const storage = {};
 
 //we create an empty object to store our notes in
 const database = {};
@@ -34,3 +34,5 @@ storage.save = (data) => {
     }
   });
 };
+
+export default storage;

@@ -1,9 +1,9 @@
 'use strict';
 
-const storage = require('../lib/storage/data-store.js');
+import storage from '../lib/storage/data-store.js';
 //require in the data storage vehicle that has been chosen by the switch case and env file
 
-const uuid = require('uuid');
+import uuid from 'uuid';
 //this will create us a unique id on each of the notes that we create
 
 class Note {
@@ -17,6 +17,7 @@ class Note {
     //this first will check if theres a config file (LTR evaluation = short circuit evaluation)
     this.content = config && config.content || '';
   }
+
   save() {
     return storage.save(this);
     //this save method returns the results of calling the storage.save() method taking in contextual 'this'
@@ -24,7 +25,7 @@ class Note {
   }
 
   static fetchAll() {
-    return storage.getall();
+    return storage.getAll();
     //this static method is called is returns/retrieves all notes that are currently storage
   }
 
@@ -36,10 +37,12 @@ class Note {
     return storage.update(this);
     // so this method takes in criteria which is an object?? how do you combine this with passing in 'this' to storage.update
   }
-  static deletOne(id) {
+
+  static deleteOne(id) {
     return storage.delete(id);
   }
 }
 
-module.exports = Note;
+export default Note;
+// module.exports = Note;
 //export the class

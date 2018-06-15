@@ -17,11 +17,15 @@ storage.get = (id) => {
   });
 };
 
-// storage.delete = (id) => {
-//     return new Promise((resolve,reject)=>{
-//         if(database[id])
-//     })
-// }
+storage.delete = (data) => {
+  return new Promise((resolve,reject)=>{
+    if(database[data.id]) {
+      resolve(database[data.id][data.content] = '',database[data.id][data.title] = '');
+    } else {
+      reject('CANT DELETE');
+    }
+  });
+};
 
 storage.save = (data) => {
   return new Promise((resolve,reject)=>{

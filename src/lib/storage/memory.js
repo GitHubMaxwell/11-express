@@ -28,7 +28,7 @@ storage.delete = (data) => {
 };
 
 storage.save = (data) => {
-  console.log('DATA in memory', data);
+  // console.log('DATA in memory', data);
   return new Promise((resolve,reject) => {
     if(data.id){
       database[data.id] = data;

@@ -17,7 +17,7 @@ const router = express.Router();
 
 
 let sendJSON = (res,data) => {
-  console.log('SEND JSON DATA', data);
+  // console.log('SEND JSON DATA', data);
   res.statusCode = 200;
   res.statusMessage = 'ok';
   res.setHeader('Content-Type', 'application/json');
@@ -37,6 +37,14 @@ let serverError = (res,err) => {
   res.write(JSON.stringify(error));
   res.end();
 };
+let getError = (res,err) => {
+  let error = {error:err};
+  res.statusCode = 404;
+  res.statusMessage = 'Not Found';
+  res.setHeader('Content-Type', 'application/json');
+  res.write(JSON.stringify(error));
+  res.end();
+};
 //forgot to put slash infront of api/
 router.get('/api/v1/notes/:id', (req,res)=> {
 
@@ -50,13 +58,19 @@ router.get('/api/v1/notes/:id', (req,res)=> {
 
   } else if(req.query.id) {
     Notes.findOne(req.query.id)
-      .then(data => sendJSON(res,data))
-      .catch(err => serverError(res, err));
+      .then(data => {
+        // console.log('GETTING INTO GET THEN');
+        sendJSON(res,data);
+      })
+      .catch(err => {
+        // console.log('GET ERROR ', res);
+        getError(res,err);
+      });
   } 
 });
 
 router.get('/api/v1/notes', (req,res)=> {
-  console.log('GETTING TO GET ALL route');
+  // console.log('GETTING TO GET ALL route');
   Notes.fetchAll()
     .then(data=>sendJSON(res,data))
     .catch(err=>serverError(res,err));
@@ -73,14 +87,8 @@ router.delete('/api/v1/notes', (req,res)=>{
 });
 //look for es6 eslint spacing and other formatting
 router.post('/api/v1/notes', (req, res) => {
-  console.log('REQ content:', req.body.content);
-  console.log('REQ title:', req.body.title);
-
-  // if the length of the keys of req dont exits or are zero
   if(!Object.keys(req.body).length) {
     // want to see if the req.body has anything in it because just doing req will evaluate to true because theres always stuff in it
-    // console.log('REQ content:', req.body.content);
-    // console.log('REQ title:', req.body.title);
     res.statusCode = 400;
     res.statusMessage = 'bad request';
     res.write('BAD REQUEST');
@@ -91,9 +99,10 @@ router.post('/api/v1/notes', (req, res) => {
     let record = new Notes(req.body);
 
     record.save()
-      .then(data => sendJSON(err, data))
+      .then(data => {
+        sendJSON(res, data);
+      })
       .catch(err => {
-        console.log('STATUS ERR:', err.status);
         serverError(res, err);
       });
   }

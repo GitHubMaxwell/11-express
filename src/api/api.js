@@ -17,6 +17,7 @@ const router = express.Router();
 
 
 let sendJSON = (res,data) => {
+  console.log('SEND JSON DATA', data);
   res.statusCode = 200;
   res.statusMessage = 'ok';
   res.setHeader('Content-Type', 'application/json');
@@ -55,10 +56,10 @@ router.get('/api/v1/notes/:id', (req,res)=> {
 });
 
 router.get('/api/v1/notes', (req,res)=> {
+  console.log('GETTING TO GET ALL route');
   Notes.fetchAll()
     .then(data=>sendJSON(res,data))
     .catch(err=>serverError(res,err));
-  
 });
 
 router.delete('/api/v1/notes', (req,res)=>{
@@ -70,17 +71,32 @@ router.delete('/api/v1/notes', (req,res)=>{
       });
   }
 });
+//look for es6 eslint spacing and other formatting
+router.post('/api/v1/notes', (req, res) => {
+  console.log('REQ content:', req.body.content);
+  console.log('REQ title:', req.body.title);
 
-router.post('/api/v1/notes', (req,res)=>{
-  if(!req.body.content || !req.body.title) {
+  // if the length of the keys of req dont exits or are zero
+  if(!Object.keys(req.body).length) {
+    // want to see if the req.body has anything in it because just doing req will evaluate to true because theres always stuff in it
+    // console.log('REQ content:', req.body.content);
+    // console.log('REQ title:', req.body.title);
     res.statusCode = 400;
     res.statusMessage = 'bad request';
+    res.write('BAD REQUEST');
     res.end();
+
+  } else {
+
+    let record = new Notes(req.body);
+
+    record.save()
+      .then(data => sendJSON(err, data))
+      .catch(err => {
+        console.log('STATUS ERR:', err.status);
+        serverError(res, err);
+      });
   }
-  let record = new Notes(req.body);
-  record.save()
-    .then(data => sendJSON(res,data))
-    .catch(console.error);
 });
 
 // module.exports = {};
